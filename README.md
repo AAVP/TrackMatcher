@@ -9,7 +9,7 @@ Este repositorio presenta un conjunto de módulos que permiten crear una GUI don
 3. Solicitar las canciones trending de un país dado.
 4. Solicitar los artistas trending de un país dado.
 
-Adicionalmente a esto, el programa automáticamente señala a través de Emotion Analysis el tipo de sentimiento que expresa la canción, catalogado en los 7 sentimientos comunes del ser humano: disgusto, ira, tristeza, felicidad y miedo.
+Adicionalmente a esto, el programa automáticamente señala a través de Emotion Analysis el tipo de sentimiento que expresa la canción, catalogado en los 5 sentimientos más comunes del ser humano: disgusto, ira, tristeza, felicidad y miedo.
 
 ## Base de datos
 La base de datos usada para poder entrenar el modelo de Recurrent Neural Networks (Redes neuronales recurrentes) fue extraída de la siguiente url: https://www.kaggle.com/yelinnzaw/song-lyrics-dataset.
