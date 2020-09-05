@@ -11,9 +11,18 @@ Este repositorio presenta un conjunto de módulos que permiten crear una GUI don
 
 Adicionalmente a esto, el programa automáticamente señala a través de Emotion Analysis el tipo de sentimiento que expresa la canción, catalogado en los 7 sentimientos comunes del ser humano: disgusto, sorpresa, neutral, ira, tristeza, felicidad y miedo.
 
+## Base de datos
+La base de datos usada para poder entrenar el modelo de Recurrent Neural Networks (Redes neuronales recurrentes) fue extraída de la siguiente url: https://www.kaggle.com/yelinnzaw/song-lyrics-dataset.
+
 ## Librerías
-El programa requiere las librerías ```json``` (no requiere instalación) y ```requests```. A continuación se presentarán los comandos de línea que se necesitan para el correcto funcionamiento de los módulos del repositorio:
+El programa requiere las librerías ```json``` (no requiere instalación), ```tensorflow``` y ```requests```.
+
+A continuación se presentarán los comandos de línea que se necesitan para el correcto funcionamiento de los módulos del repositorio:
 
 ```shell
+pip install tensorflow
 pip install requests
 ```
+
+## Ejecución
+Para ejecutar el programa se debe correr el archivo ...................
