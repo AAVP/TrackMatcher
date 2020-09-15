@@ -43,9 +43,9 @@ Para ejecutar las funcionalidades de el buscador de canciones y/o letras se debe
 
 1. Para buscar una canción se debe modificar la llamada de la función ```music_matcher```:
 
-  1.1. Si se desea buscar por la letra de la canción, debe especificar 'by_lyrics': True,'lyrics': <LETRA DE LA CANCIÓN>,'artist': <NOMBRE ARTISTA> (Artista es un parámetro opcional).
+    * Si se desea buscar por la letra de la canción, debe especificar 'by_lyrics': True,'lyrics': <LETRA DE LA CANCIÓN>,'artist': <NOMBRE ARTISTA> (Artista es un parámetro opcional).
   
-  1.2. Si se desea buscar por el nombre de la canción, debe especificar 'by_lyrics': False, 'track': <NOMBRE CANCION>, 'artist': <NOMBRE ARTISTA> (Artista es un parámetro opcional).
+    * Si se desea buscar por el nombre de la canción, debe especificar 'by_lyrics': False, 'track': <NOMBRE CANCION>, 'artist': <NOMBRE ARTISTA> (Artista es un parámetro opcional).
   
 2. Para buscar las canciones mejor valoradas de un género musical dado, se debe modificar la llamada de la función ```recommendations_genre```, asignando como parámetros: 'top': <CANTIDAD SOLICITADA>, 'genre': <GÉNERO MUSICAL>.
   
