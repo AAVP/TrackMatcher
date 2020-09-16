@@ -11,7 +11,10 @@ Este repositorio presenta un conjunto de módulos que permiten crear una GUI don
 
 Adicionalmente a esto, el programa automáticamente señala a través de Sentiment Analysis el tipo de sentimiento que expresa la canción, catalogado en los seis sentimientos más comunes del ser humano: **Disgusto, Ira, Tristeza, Felicidad, Sorpresa y Miedo.**
 
-
+## Aplicación de Ciencia de Datos
+El programa, a modo de funcionar correctamente, aplica algunas herramientas comunes e importantes de la Ciencia de Datos. En específico, el proyecto utiliza las siguientes técnicas:
+* Webscraping: La extracción de información de Internet es esencial para poder adquirir toda la base de datos de artistas, canciones y letras. El uso de la API de Musixmatch facilita la implementación de esta técnica, proveyendo credenciales gratis para poder extraer tal información directamente a través de parámetros fáciles de usar dentro de los códigos. En el archivo ```musixmatch_api.py``` se encuentra todo el uso de tal API.
+* Redes Neuronales: El uso de Machine y Deep Learning es otra de las partes esenciales del código. El programa fue entrenado de forma tal que es capaz de procesar información como un humano, entregándonos el sentimiento que la letra de una canción entrega al ser escuchada. Este comportamiento del programa fue desarrollado a través de las Redes Neuronales, usando ```tensorflow``` como librería principal de Machine Learning. Para este entrenamiento, el código tuvo que procesar una base de datos con fragmentos de letra de una canción, catalogadas previamente con su emoción respectiva.
 
 ## Base de datos
 La base de datos usada para poder entrenar el modelo de Recurrent Neural Networks (Redes neuronales recurrentes) fue extraída de las siguientes url's: https://www.kaggle.com/yelinnzaw/song-lyrics-dataset, https://www.kaggle.com/yelinnzaw/songlyric. Ambas bases de datos contienen las mismas columnas, pero son registros distintos. Lo que se hizo para entrenar el modelo fue tomar todos los datos del primer url y parte de los registros del segundo url. Para testear el modelo se uso el remanente de este último url.
@@ -54,6 +57,11 @@ Para ejecutar las funcionalidades de el buscador de canciones y/o letras se debe
 4. Para buscar el top de artistas de un país dado, se debe modificar la llamada de la función ```top_artists```, asignando como parámetros: 'top': <CANTIDAD SOLICITADA>, 'country': <PAÍS>.
 
 Para ejecutar el programa de Sentiment Analysis de una canción se debe ejecutar el archivo ```neural_network.ipynb```, correr todas las celdas de código hasta el proceso de "Tokenización".
+
+## Aclaraciones extra
+El programa en su gran mayoría ya se encuentra desarrollado; las funciones en ```musixmatch_api.py``` y ```neural_network.ipynb``` pueden ser usadas para encontrar resultados de consultas. Algunas funciones de el primer código mencionado solamente entregan un output sin ser tratado, es decir, por ejemplo, la función top_artist es capaz de filtrar la información según los requerimientos pero el output sigue siendo el archivo json que la API de Musixmatch nos entrega. También es posible consultar en el notebook ```neural_network.ipynb``` qué sentimiento tiene la letra de una canción con tan solo escribir en la variable ```phrase``` el fragmento de letra. El output entrega 6 valores numéricos, cada uno representando el porcentaje que el programa le atribuye a cada sentimiento por la letra.
+
+Esa parte del programa necesita ser tratada todavía para que entregue un output más sofisticado, pero al menos puede entregar resultados contundentes. Hasta el momento no hay más funcionalidades que agregar, excepto solamente la implementación de una interfaz de usuario que use la información que entregan los códigos anteriores.
 
 
 ## Visualización
