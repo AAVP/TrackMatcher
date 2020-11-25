@@ -23,7 +23,7 @@ A modo de aclaración, nuestros conocimientos previos de programación solo se l
 La base de datos usada para poder entrenar el modelo de Recurrent Neural Networks (Redes neuronales recurrentes) fue extraída de las siguientes url's: https://www.kaggle.com/yelinnzaw/song-lyrics-dataset, https://www.kaggle.com/yelinnzaw/songlyric. Ambas bases de datos contienen las mismas columnas, pero son registros distintos. Lo que se hizo para entrenar el modelo fue tomar todos los datos del primer url y parte de los registros del segundo url. Para testear el modelo se uso el remanente de este último url.
 
 ## Librerías
-El programa si bien usa las librerías que no requieren instalación, tales como ```os```, ```csv``` y ```json```, también requiere ciertas instalaciones de librería externas como ```tensorflow```, ```numpy```, ```requests``` y ```pyqt5```.
+El programa si bien usa las librerías que no requieren instalación, tales como ```os```, ```csv``` y ```json```, también requiere ciertas instalaciones de librería externas como ```tensorflow```, ```numpy```, ```pandas```, ```requests``` y ```pyqt5```.
 
 Si se desea descargar el repositorio y probarlo en el sistema local, existen dos maneras de llevar a cabo la instalación de las librerías.
 
@@ -40,6 +40,7 @@ A continuación se presentarán los comandos de línea que se necesitan ingresar
 ```shell
 pip install tensorflow
 pip install numpy
+pip install pandas
 pip install requests
 pip install pyqt5
 ```
