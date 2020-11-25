@@ -62,9 +62,11 @@ def top_artists(dict_info):
         dict_info['country'] + '&page=1&page_size=' + dict_info['top']
 
     # Searching for top artist
-    print(call)
     request = requests.get(call + f'&apikey={api_key}').json()
-    print(json.dumps(request, indent=4))
+    for artist in request['message']['body']['artist_list']:
+        artist_name = artist['artist']['artist_name']
+        artist_country = artist['artist']['artist_country']
+        print(f'{artist_name}\t({artist_country})')
 
 
 def top_tracks(dict_info):
@@ -80,7 +82,18 @@ def top_tracks(dict_info):
 
     # Searching for top artist
     request = requests.get(call + f'&apikey={api_key}').json()
-    print(json.dumps(request, indent=4))
+    index = 1
+    for track in request['message']['body']['track_list']:
+        track_name = track['track']['track_name']
+        track_album = track['track']['album_name']
+        track_artist = track['track']['artist_name']
+        track_genre = track['track']['primary_genres']['music_genre_list']
+        if track_genre:
+            track_genre = track['track']['primary_genres']['music_genre_list'][0]['music_genre']['music_genre_name']
+        else:
+            track_genre = 'Unknown'
+        print(f'{index}. {track_name} \t Album: {track_album} \t Artist: {track_artist} \t Genre: {track_genre}')
+        index += 1
 
 
 def recommendations_genre(dict_info):
@@ -106,32 +119,46 @@ def recommendations_genre(dict_info):
 
     # Searching for the top tracks by a given genre
     request = requests.get(call + f'&apikey={api_key}').json()
-    print(json.dumps(request, indent=4))
+    index = 1
+    for track in request['message']['body']['track_list']:
+        track_name = track['track']['track_name']
+        track_album = track['track']['album_name']
+        track_artist = track['track']['artist_name']
+        track_genre = track['track']['primary_genres']['music_genre_list']
+        if track_genre:
+            track_genre = track['track']['primary_genres']['music_genre_list'][0]['music_genre']['music_genre_name']
+        else:
+            track_genre = 'Unknown'
+        print(f'{index}. {track_name} \t Album: {track_album} \t Artist: {track_artist} \t Genre: {track_genre}')
+        index += 1
 
 
 if __name__ == "__main__":
     music_matcher(
         {
             'by_lyrics': False,
-            'track': 'Perfect',
-            'artist': 'Ed Sheeran'
+            'track': 'Señorita',
+            'artist': 'Shawn Mendes'
         }
     )
+    print('--------------------------------------------')
     top_artists(
         {
             'top': '10',
             'country': 'cl'
         }
     )
+    print('--------------------------------------------')
     top_tracks(
         {
             'top': '10',
             'country': 'cl'
         }
     )
+    print('--------------------------------------------')
     recommendations_genre(
         {
             'top': '10',
-            'genre': 'K-Pop'
+            'genre': 'Rock'
         }
     )

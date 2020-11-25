@@ -12,23 +12,19 @@ from tensorflow.keras.models import load_model
 with open('parameters.json', 'r') as json_file:
     pm = json.load(json_file)
 
-# At first we need to load the data
-training_lyrics = []  # Here will be stored the lyrics data
-training_emotions = []  # Here will be stored the emotions data
-testing_lyrics = []
-testing_emotions = []
+lyrics = []  # Here will be stored the lyrics data
+emotions = []  # Here will be stored the emotions data
 
 # Here will be stored every type of emotiom
 labels = ["Anger", "Joy", "Sad", "Disgusting", "Fear", "Suprise"]
 
-training_data_path = os.path.join('data', 'training_lyrics.csv')
-testing_data_path = os.path.join('data', 'testing_lyrics.csv')
+data_path = os.path.join('data', 'lyrics_dataset.csv')
 
 
 def loading_data(lyrics_list, emotions_list, path):
     with open(path, 'r', encoding='utf-8') as file:
         dataset = csv.reader(file)
-        next(dataset)  # We skip the header
+        next(dataset)  # We skip the header of the file
 
         for track in dataset:
             lyrics_list.append(track[0].capitalize())
@@ -43,53 +39,61 @@ def numerize_emotions(emotions_dataset):
                 emotions_dataset[i] = j
 
 
-loading_data(training_lyrics, training_emotions, training_data_path)
-loading_data(testing_lyrics, testing_emotions, testing_data_path)
-numerize_emotions(training_emotions)
-numerize_emotions(testing_emotions)
+loading_data(lyrics, emotions, data_path)
+numerize_emotions(emotions)
 
 
 # Tokenization process
 tokenizer = Tokenizer(num_words=pm["num_words"], oov_token=pm["oov_tok"])
-tokenizer.fit_on_texts(training_lyrics)  # Words are fitted on the tokenizer
+tokenizer.fit_on_texts(lyrics)  # Words are fitted on the tokenizer
 word_index = tokenizer.word_index  # Words are represented by index
 
 vocab_size = len(word_index) + 1  # The size of the vocabulary
 
-training_lyrics = tokenizer.texts_to_sequences(training_lyrics)
-training_lyrics = pad_sequences(
-    training_lyrics,
+lyrics = tokenizer.texts_to_sequences(lyrics)
+lyrics = pad_sequences(
+    lyrics,
     maxlen=pm["max_length"],
     padding=pm["padding_type"],
     truncating=pm["trunc_type"]
 )
 
-testing_lyrics = tokenizer.texts_to_sequences(testing_lyrics)
-testing_lyrics = pad_sequences(
-    testing_lyrics,
-    maxlen=pm["max_length"],
-    padding=pm["padding_type"],
-    truncating=pm["trunc_type"]
-)
-
-training_emotions = to_categorical(training_emotions, len(labels))
-testing_emotions = to_categorical(testing_emotions, len(labels))
-
+emotions = to_categorical(emotions, len(labels))
 
 # Transforming the tokenized data in numpy arrays
-training_lyrics = np.array(training_lyrics)
-training_emotions = np.array(training_emotions)
-testing_lyrics = np.array(testing_lyrics)
-testing_emotions = np.array(testing_emotions)
+lyrics = np.array(lyrics)
+emotions = np.array(emotions)
 
 
 # ---- Here you can predict the emotion of any song lyrics ----
 model = load_model('model.h5')
-phrase = ["I am talking to the moon still trying to get to you"]
-sequence = tokenizer.texts_to_sequences(phrase)
-padded = pad_sequences(sequence,
-                       maxlen=pm["max_length"],
-                       padding=pm["padding_type"],
-                       truncating=pm["trunc_type"])
-print(model.predict(padded))
-print(model.predict(padded).argmax())
+
+
+def predict_emotion(lyrics):
+    """
+    It predicts the percentage of the prevalent emotions of a given lyric
+
+    Args:
+        lyrics (str): string written in English
+
+    Returns:
+        dict: dictionary obj. with the percentages
+    """
+    sequence = tokenizer.texts_to_sequences([lyrics])
+    padded = pad_sequences(sequence,
+                           maxlen=pm["max_length"],
+                           padding=pm["padding_type"],
+                           truncating=pm["trunc_type"])
+
+    # prediction has the percentage of each emotion
+    prediction = model.predict(padded)
+    results = {}  # The keys will be the emotion name and the values will be the percentage
+    for i in range(len(prediction[0])):
+        results[labels[i]] = prediction[0][i]
+
+    return results
+
+
+if __name__ == '__main__':
+    for emotion, percentage in predict_emotion("Then I saw her face, now I'm a believer").items():
+        print(f'{emotion}: {percentage}')
